@@ -20,3 +20,9 @@ npm-debug.log*
 
 # Docker Volumes Data (Never commit local DB storage)
 mysql_data/
+
+# Jest / Testing
+coverage/
+
+# TypeScript build caches
+*.tsbuildinfo
