@@ -3,7 +3,7 @@ import { Model, DataTypes, Sequelize } from 'sequelize';
 export class Client extends Model {
   public id!: number;
   public name!: string;
-  public nationalId!: string; // dpi
+  public nationalId!: string;
   public phone!: string;
   public birthDate!: Date;
 }

@@ -3,10 +3,10 @@ import { Loan } from './Loan';
 
 export class Payment extends Model {
   public id!: number;
-  public loanId!: number; // credito_id
+  public loanId!: number;
   public amount!: number;
   public paymentDate!: Date;
-  public type!: 'INSTALLMENT' | 'PARTIAL_PAYMENT' | 'FULL_PAYOFF'; // CUOTA | ABONO | CANCELACION
+  public type!: 'INSTALLMENT' | 'PARTIAL_PAYMENT' | 'FULL_PAYOFF';
 }
 
 export const initPayment = (sequelize: Sequelize) => {

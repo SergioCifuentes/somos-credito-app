@@ -14,11 +14,9 @@ const seedFromCsv = async () => {
     await sequelize.authenticate();
     console.log('Database connection established for CSV seeding...');
 
-    // Reset database
     await sequelize.sync({ force: true });
     console.log('Tables recreated successfully.');
 
-    // 1. Seed Clients
     const clientsFilePath = path.join(csvDir, 'clients.csv');
     const clientsCsv = fs.readFileSync(clientsFilePath, 'utf8');
     const clientsRecords = parse(clientsCsv, { columns: true, skip_empty_lines: true }) as Array<{
@@ -40,7 +38,6 @@ const seedFromCsv = async () => {
     }
     console.log(`Successfully seeded ${clientsRecords.length} clients from CSV.`);
 
-    // 2. Seed Loans
     const loansFilePath = path.join(csvDir, 'loans.csv');
     const loansCsv = fs.readFileSync(loansFilePath, 'utf8');
     const loansRecords = parse(loansCsv, { columns: true, skip_empty_lines: true }) as Array<{
@@ -66,7 +63,6 @@ const seedFromCsv = async () => {
     }
     console.log(`Successfully seeded ${loansRecords.length} loans from CSV.`);
 
-    // 3. Seed Payment Schedules
     const schedulesFilePath = path.join(csvDir, 'payment_schedules.csv');
     const schedulesCsv = fs.readFileSync(schedulesFilePath, 'utf8');
     const schedulesRecords = parse(schedulesCsv, { columns: true, skip_empty_lines: true }) as Array<{
@@ -90,7 +86,6 @@ const seedFromCsv = async () => {
     }
     console.log(`Successfully seeded ${schedulesRecords.length} payment schedules from CSV.`);
 
-    // 4. Seed Payments
     const paymentsFilePath = path.join(csvDir, 'payments.csv');
     const paymentsCsv = fs.readFileSync(paymentsFilePath, 'utf8');
     const paymentsRecords = parse(paymentsCsv, { columns: true, skip_empty_lines: true }) as Array<{

@@ -3,11 +3,11 @@ import { Loan } from './Loan';
 
 export class PaymentSchedule extends Model {
   public id!: number;
-  public loanId!: number; // credito_id
-  public installmentNumber!: number; // numero_cuota
-  public dueDate!: Date; // fecha_vencimiento
-  public installmentAmount!: number; // monto_cuota
-  public status!: 'PENDING' | 'PAID' | 'OVERDUE'; // PENDIENTE | PAGADA | VENCIDA
+  public loanId!: number;
+  public installmentNumber!: number;
+  public dueDate!: Date;
+  public installmentAmount!: number; 
+  public status!: 'PENDING' | 'PAID' | 'OVERDUE';
 }
 
 export const initPaymentSchedule = (sequelize: Sequelize) => {

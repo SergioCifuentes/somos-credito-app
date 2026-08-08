@@ -7,7 +7,7 @@ export class Loan extends Model {
   public amount!: number;
   public termMonths!: number;
   public annualRate!: number;
-  public status!: 'ACTIVE' | 'ARREARS' | 'CANCELED' | 'VOIDED'; // ACTIVO | MORA | CANCELADO | ANULADO
+  public status!: 'ACTIVE' | 'ARREARS' | 'CANCELED' | 'VOIDED';
   public disbursementDate!: Date;
 }
 
