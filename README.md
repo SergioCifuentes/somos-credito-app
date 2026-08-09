@@ -27,10 +27,9 @@ DB_HOST=localhost
 DB_USER=root
 DB_PASSWORD=tu_contraseña_local
 DB_NAME=somos_credito
+```
 Poblar la Base de Datos e Iniciar el Servidor:
 Ejecuta el seeder para crear las tablas de la base de datos y cargar los datos iniciales del CSV, luego inicia el servidor.
-```
-
 ```
 npx tsx src/seeders/seedFromCsv.ts
 npm run dev
