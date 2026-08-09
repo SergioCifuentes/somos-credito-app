@@ -1,7 +1,8 @@
 import { Request, Response } from 'express';
 import { LoanService } from '../services/loan.service';
+import { CreateLoanDTO, CreateLoanSchema } from '../dtos/loan.dto';
 
-export class LoanController {
+export class  LoanController {
   
   static async getLoan(req: Request, res: Response) {
     const loanId = parseInt(req.params.id as string, 10);
@@ -24,6 +25,39 @@ export class LoanController {
     res.status(200).json({
       success: true,
       data: history,
+    });
+  }
+
+  static async createLoan(req: Request, res: Response) {
+    const loanData: CreateLoanDTO = CreateLoanSchema.parse(req.body);
+  
+    const newLoan = await LoanService.createLoan(loanData);
+    
+    res.status(201).json({
+      success: true,
+      data: newLoan,
+    });
+  }
+
+  static async registerPayment(req: Request, res: Response) {
+    const loanId = parseInt(req.params.id as string, 10);
+    const { amount } = req.body;
+    
+    const paymentResult = await LoanService.registerPayment(loanId, amount);
+    
+    res.status(200).json({
+      success: true,
+      data: paymentResult,
+    });
+  }
+
+  static async getAccountStatement(req: Request, res: Response) {
+    const loanId = parseInt(req.params.id as string, 10);
+    const statement = await LoanService.getAccountStatement(loanId);
+    
+    res.status(200).json({
+      success: true,
+      data: statement,
     });
   }
 }
