@@ -22,6 +22,7 @@ export class ReportService {
       include: [
         {
           model: PaymentSchedule,
+          as: 'PaymentSchedules',
           where: {
             status: {
               [Op.in]: [PaymentScheduleStatus.PENDING, PaymentScheduleStatus.OVERDUE],

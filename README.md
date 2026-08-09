@@ -1,11 +1,13 @@
-Guía de Configuración Local: Somos Crédito
+# Guía de Configuración Local: Somos Crédito
 
-Requisitos Previos
+## Requisitos Previos
 
-- Node.js (v18 o superior)
-- MySQL o PostgreSQL ejecutándose localmente
+- Node.js (versión 18 o superior recomendada)
 
-1. Configuración del Backend (API y Base de Datos)
+- Docker o Instancia de MySQL
+
+### 1. Configuración y Ejecución del Backend
+
 Abre una terminal y navega al directorio del backend:
 
 ```
@@ -30,13 +32,14 @@ Ejecuta el seeder para crear las tablas de la base de datos y cargar los datos i
 ```
 
 ```
-npm run seed
+npx tsx src/seeders/seedFromCsv.ts
 npm run dev
 ```
 
 La API del backend ahora se está ejecutando en: http://localhost:3000/api/v1
 
-2. Configuración del Frontend (Interfaz en React)
+## 2. Configuración y Ejecución del Frontend
+
 Abre una nueva ventana de terminal (deja el backend ejecutándose en la anterior) y navega al directorio del frontend:
 
 ```

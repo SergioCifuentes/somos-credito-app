@@ -3,12 +3,12 @@ import { Loan } from './Loan';
 import { PaymentScheduleStatus } from '../constants/enums';
 
 export class PaymentSchedule extends Model {
-  public id!: number;
-  public loanId!: number;
-  public installmentNumber!: number;
-  public dueDate!: Date;
-  public installmentAmount!: number;
-  public status!: PaymentScheduleStatus;
+  declare id: number;
+  declare loanId: number;
+  declare installmentNumber: number;
+  declare dueDate: Date;
+  declare installmentAmount: number;
+  declare status: PaymentScheduleStatus;
 }
 
 export const initPaymentSchedule = (sequelize: Sequelize) => {
@@ -34,4 +34,5 @@ export const initPaymentSchedule = (sequelize: Sequelize) => {
       { fields: ['status', 'dueDate'] }
     ]
   });
+
 };

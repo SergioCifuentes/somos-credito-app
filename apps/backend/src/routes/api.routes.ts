@@ -10,6 +10,10 @@ router.get(
   validate(getLoanSchema),
   LoanController.getLoan
 );
+router.get(
+  '/creditos',
+  LoanController.getAllLoans
+);
 
 router.get(
   '/clientes/:clientId/creditos',
