@@ -1,11 +1,12 @@
 import { Model, DataTypes, Sequelize } from 'sequelize';
+import { Loan } from './Loan';
 
 export class Client extends Model {
-  public id!: number;
-  public name!: string;
-  public nationalId!: string;
-  public phone!: string;
-  public birthDate!: Date;
+  declare id: number;
+  declare name: string;
+  declare nationalId: string;
+  declare phone: string;
+  declare birthDate: Date;
 }
 
 export const initClient = (sequelize: Sequelize) => {
@@ -16,4 +17,5 @@ export const initClient = (sequelize: Sequelize) => {
     phone: { type: DataTypes.STRING, allowNull: false },
     birthDate: { type: DataTypes.DATEONLY, allowNull: false },
   }, { sequelize, tableName: 'clients' });
+
 };

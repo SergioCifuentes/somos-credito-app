@@ -1,12 +1,13 @@
 import { Model, DataTypes, Sequelize } from 'sequelize';
 import { Loan } from './Loan';
+import { PaymentType } from '../constants/enums';
 
 export class Payment extends Model {
-  public id!: number;
-  public loanId!: number;
-  public amount!: number;
-  public paymentDate!: Date;
-  public type!: 'INSTALLMENT' | 'PARTIAL_PAYMENT' | 'FULL_PAYOFF';
+  declare id: number;
+  declare loanId: number;
+  declare amount: number;
+  declare paymentDate: Date;
+  declare type: PaymentType;
 }
 
 export const initPayment = (sequelize: Sequelize) => {
@@ -20,8 +21,10 @@ export const initPayment = (sequelize: Sequelize) => {
     amount: { type: DataTypes.DECIMAL(10, 2), allowNull: false },
     paymentDate: { type: DataTypes.DATE, allowNull: false, defaultValue: DataTypes.NOW },
     type: {
-      type: DataTypes.ENUM('INSTALLMENT', 'PARTIAL_PAYMENT', 'FULL_PAYOFF'),
+      type: DataTypes.ENUM(PaymentType.FEE, PaymentType.CANCELLATION, PaymentType.PAYMENT),
       allowNull: false
     }
   }, { sequelize, tableName: 'payments' });
+
+
 };

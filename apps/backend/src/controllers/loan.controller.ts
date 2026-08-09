@@ -60,4 +60,16 @@ export class  LoanController {
       data: statement,
     });
   }
+
+static async getAllLoans(req: Request, res: Response) {
+  const page = Math.max(Number(req.query.page) || 1, 1);
+const limit = Math.min(Math.max(Number(req.query.limit) || 20, 1), 100);
+
+  const result = await LoanService.getAllLoans(page, limit);
+
+  return res.status(200).json({
+    data: result.data,
+    pagination: result.pagination,
+  });
+}
 }

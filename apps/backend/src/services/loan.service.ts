@@ -7,12 +7,13 @@ import { CreateLoanDTO } from '../dtos/loan.dto';
 import { Client } from '../models/Client';
 import { FinancialUtil } from '../utils/financial.util';
 import { Payment } from '../models/Payment';
+import { LoanMapper } from '../mappers/LoanMapper';
 
 export class LoanService {
 
   static async getLoanDetails(loanId: number) {
     const loan = await Loan.findByPk(loanId, {
-      include: [{ model: PaymentSchedule }],
+      include: [{ model: PaymentSchedule, as: 'PaymentSchedules', }],
     });
 
     if (!loan) {
@@ -97,7 +98,7 @@ export class LoanService {
     const transaction = await sequelize.transaction();
     try {
       const loan = await Loan.findByPk(loanId, {
-        include: [{ model: PaymentSchedule }],
+        include: [{ model: PaymentSchedule, as: 'PaymentSchedules', }],
         transaction,
         lock: transaction.LOCK.UPDATE,
       });
@@ -155,7 +156,7 @@ export class LoanService {
 
 static async getAccountStatement(loanId: number) {
   const loan = await Loan.findByPk(loanId, {
-    include: [{ model: PaymentSchedule }],
+    include: [{ model: PaymentSchedule, as: 'PaymentSchedules', }],
   });
 
   if (!loan) throw new AppError('Loan not found', 404);
@@ -175,6 +176,37 @@ static async getAccountStatement(loanId: number) {
     overdueInstallments: statementMath.overdueCount,
     nextDueDate: statementMath.nextDueDate,
     minimumPaymentAmount: statementMath.minimumPayment,
+  };
+}
+
+static async getAllLoans(page = 1, limit = 20) {
+  const offset = (page - 1) * limit;
+
+  const { rows, count } = await Loan.findAndCountAll({
+    include: [
+      {
+        model: Client,
+        as: 'client',
+        attributes: ['id', 'name'],
+      },
+      {
+        model: PaymentSchedule,
+        as: 'PaymentSchedules',
+      },
+    ],
+    limit,
+    offset,
+    distinct: true,
+  });
+
+  return {
+    data: rows.map(LoanMapper.toListItemDto),
+    pagination: {
+      page,
+      limit,
+      total: count,
+      totalPages: Math.ceil(count / limit),
+    },
   };
 }
 }

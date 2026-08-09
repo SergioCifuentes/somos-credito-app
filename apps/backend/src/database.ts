@@ -26,14 +26,14 @@ initLoan(sequelize);
 initPayment(sequelize);
 initPaymentSchedule(sequelize);
 
-Client.hasMany(Loan, { foreignKey: 'clientId' });
-Loan.belongsTo(Client, { foreignKey: 'clientId' });
+Client.hasMany(Loan, { foreignKey: 'clientId', as: 'loans' });
+Loan.belongsTo(Client, { foreignKey: 'clientId', as: 'client' });
 
-Loan.hasMany(Payment, { foreignKey: 'loanId' });
-Payment.belongsTo(Loan, { foreignKey: 'loanId' });
+Loan.hasMany(Payment, { foreignKey: 'loanId', as: 'payments' });
+Payment.belongsTo(Loan, { foreignKey: 'loanId', as: 'loan' });
 
-Loan.hasMany(PaymentSchedule, { foreignKey: 'loanId' });
-PaymentSchedule.belongsTo(Loan, { foreignKey: 'loanId' });
+Loan.hasMany(PaymentSchedule, { foreignKey: 'loanId', as: 'PaymentSchedules' }); 
+PaymentSchedule.belongsTo(Loan, { foreignKey: 'loanId', as: 'loan' });
 
 const testConnection = async () => {
   try {
