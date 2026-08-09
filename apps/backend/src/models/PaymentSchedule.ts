@@ -1,13 +1,14 @@
 import { Model, DataTypes, Sequelize } from 'sequelize';
 import { Loan } from './Loan';
+import { PaymentScheduleStatus } from '../constants/enums';
 
 export class PaymentSchedule extends Model {
   public id!: number;
   public loanId!: number;
   public installmentNumber!: number;
   public dueDate!: Date;
-  public installmentAmount!: number; 
-  public status!: 'PENDING' | 'PAID' | 'OVERDUE';
+  public installmentAmount!: number;
+  public status!: PaymentScheduleStatus;
 }
 
 export const initPaymentSchedule = (sequelize: Sequelize) => {
@@ -22,9 +23,15 @@ export const initPaymentSchedule = (sequelize: Sequelize) => {
     dueDate: { type: DataTypes.DATEONLY, allowNull: false },
     installmentAmount: { type: DataTypes.DECIMAL(10, 2), allowNull: false },
     status: {
-      type: DataTypes.ENUM('PENDING', 'PAID', 'OVERDUE'),
+      type: DataTypes.ENUM(...Object.values(PaymentScheduleStatus)),
       allowNull: false,
-      defaultValue: 'PENDING'
+      defaultValue: PaymentScheduleStatus.PENDING,
     }
-  }, { sequelize, tableName: 'payment_schedules' });
+  }, {
+    sequelize, tableName: 'payment_schedules',
+    indexes: [
+      { fields: ['loanId'] },
+      { fields: ['status', 'dueDate'] }
+    ]
+  });
 };
